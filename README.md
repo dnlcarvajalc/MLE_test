@@ -1,7 +1,9 @@
 # Getting Started
 To execute the complete pipeline:
 
-`make`
+```bash
+make
+```
 This single command will:
 
 - Set up the Python virtual environment
@@ -11,11 +13,14 @@ Install all required dependencies
 - Build and deploy the API in a Docker container
 - The final API will be available at http://localhost:8000 with classification endpoints ready for real-time inference.
 
-pd: You need to have pyspark, java 11 and docker pre installed. The Makefile only will construct the environment using venv.
+Note: You must have Java 11, PySpark, and Docker pre-installed.
+The Makefile sets up only the Python virtual environment using venv.
 
-# WARNING: MAKEFILE WILL KILL CONTAINERS USING PORT 8000. ELIMINATE FROM MAKEFILE RUN_API STAGE OR CHANGE IT'S PORT IF YOU ARE CURRENTLY USING IT
+# ⚠️ WARNING: The run_api target in the Makefile will stop and remove any container using port 8000.
+If you're running another service on this port, modify the Makefile accordingly.
 
-you can test the API by running this command in the terminal just changing the text:
+# Testing the API
+You can test the API by sending a POST request via curl:
 
 `curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d '{"text": "Hello Mr Cami"}'`
 
@@ -63,3 +68,13 @@ The API and deployment system transforms the trained BERT model from Model Train
 
  - **FastAPI Application** (e_apification.py) - REST API server that loads the trained model and provides prediction endpoints
  - **Docker Container** (Dockerfile) - Containerized deployment environment with minimal dependencies
+
+# Future Enhancements
+
+ - ✅ Unit and integration tests
+
+ - 📈 Logging and monitoring for the API
+
+ - 🧪 CI/CD pipeline (e.g., GitHub Actions)
+
+ - 🛠️ Retry/timeout logic in data ingestio
