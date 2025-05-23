@@ -24,6 +24,10 @@ You can test the API by sending a POST request via curl:
 
 `curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d '{"text": "Hello Mr Cami"}'`
 
+You can also use swagger to try it out!
+`http://localhost:8000/docs`
+
+
 
 # System Architecture
 The MLE_test repository implements a linear ML pipeline where each stage depends on the previous one's output:
