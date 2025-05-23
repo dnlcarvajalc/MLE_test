@@ -17,6 +17,21 @@ class TextRequest(BaseModel):
 
 @app.post("/predict")
 def predict(req: TextRequest):
+    """
+    Predicts the category of a given text input using a fine-tuned BERT model.
+
+    This endpoint receives a text string, processes it through a BERT tokenizer,
+    performs inference with the classification model, and returns the predicted
+    category label along with the confidence score.
+
+    Args:
+        req (TextRequest): A Pydantic request body containing the `text` to classify.
+
+    Returns:
+        dict: A dictionary with:
+            - "label" (str): The predicted class label.
+            - "confidence" (float): The confidence score of the prediction (between 0 and 1).
+    """
     inputs = tokenizer(req.text, return_tensors="pt", truncation=True, padding="max_length", max_length=128)
     with torch.no_grad():
         outputs = model(**inputs)
@@ -28,4 +43,5 @@ def predict(req: TextRequest):
             "confidence": round(probs[0][predicted_class_id].item(), 3)
         }
 
+#Use the command line below to test in other terminal the working API in the container
 #curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d '{"text": "Hello Mr Cami"}'

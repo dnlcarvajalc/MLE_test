@@ -11,6 +11,22 @@ from transformers import (
 
 
 class TextClassifierTrainer:
+    """
+    A trainer class for fine-tuning a BERT-based model on a text classification task.
+
+    This class loads a dataset from a Parquet file, tokenizes text using a pre-trained
+    BERT tokenizer, and trains a classification model using Hugging Face's `Trainer`.
+
+    Attributes:
+        input_path (str): Path to the input Parquet file containing training data.
+        output_path (str): Directory where the trained model and tokenizer will be saved.
+        model_name (str): Name of the Hugging Face pre-trained BERT model.
+        df (pd.DataFrame): Loaded dataset as a pandas DataFrame.
+        label2id (dict): Dictionary mapping category labels to integer IDs.
+        id2label (dict): Dictionary mapping integer IDs to category labels.
+        tokenizer (BertTokenizer): Tokenizer initialized from the pre-trained BERT model.
+        model (BertForSequenceClassification): BERT model configured for classification.
+    """
     def __init__(self,
                  input_path: str,
                  output_path: str,

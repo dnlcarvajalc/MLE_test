@@ -28,8 +28,33 @@ class TwitterDataTransformer:
         return df
 
     def transform(self, df: DataFrame) -> DataFrame:
-        #inbound = True → The tweet is incoming, from a customer to the brand.
-        #inbound = False → The tweet is outgoing, from the brand to a customer.
+        """
+        Transforms the input DataFrame by cleaning text, converting data types,
+        ordering by timestamp, and filtering for inbound tweets.
+
+        The transformation includes:
+        - Casting the `inbound` column to BooleanType.
+            - inbound = True → The tweet is incoming, from a customer to the brand.
+            - inbound = False → The tweet is outgoing, from the brand to a customer.
+        - Parsing `created_at` timestamps into proper datetime format.
+        - Ordering rows by `created_at`.
+        - Cleaning the `text` column by:
+        - Lowercasing the content.
+        - Removing URLs.
+        - Removing special characters (except alphanumerics and '@').
+        - Dropping the original `text` column and renaming the cleaned column as `clean_text`.
+        - Identifying authors with more than 5 outbound tweets as brands.
+        - Adding a boolean `is_brand` column indicating brand authorship.
+        - Filtering only inbound (customer-to-brand) tweets.
+
+        Args:
+            df (DataFrame): A PySpark DataFrame containing Twitter support data with
+                            columns such as 'text', 'inbound', 'author_id', and 'created_at'.
+
+        Returns:
+            DataFrame: A cleaned and enriched DataFrame containing only inbound tweets
+                    and a new column `is_brand` indicating brand authorship.
+        """
         df = df.withColumn("inbound", col("inbound").cast(BooleanType())) \
                .withColumn("created_at", to_timestamp(col("created_at"), "EEE MMM dd HH:mm:ss Z yyyy")) \
                .orderBy("created_at")
