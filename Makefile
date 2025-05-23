@@ -1,8 +1,8 @@
 VENV_DIR := .venv
 
-.PHONY: all env data_ingestion
+.PHONY: all env data_ingestion data_transformation
 
-all: env data_ingestion
+all: env data_ingestion data_transformation
 
 env:
 	@if [ ! -d "$(VENV_DIR)" ]; then \
@@ -13,3 +13,6 @@ env:
 
 data_ingestion:
 	@. $(VENV_DIR)/bin/activate && python src/data_ingestion.py
+
+data_transformation:
+	@. $(VENV_DIR)/bin/activate && python src/data_transformation.py
