@@ -175,3 +175,5 @@ cython_debug/
 
 # ignore data upload
 data/
+models/
+output/

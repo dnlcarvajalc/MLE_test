@@ -1,6 +1,6 @@
 import os
 from pyspark.sql import SparkSession, DataFrame, Window
-from pyspark.sql.functions import col, when, count, lower, regexp_replace, lit, to_timestamp
+from pyspark.sql.functions import col, count, lower, regexp_replace, lit, to_timestamp
 from pyspark.sql.types import BooleanType
 
 
@@ -53,7 +53,6 @@ class TwitterDataTransformer:
 
     def write_output(self, df: DataFrame):
         os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
-        df.show()
         try:
             df.write.mode("overwrite").parquet(self.output_path)
             print("Parquet written successfully")
@@ -72,7 +71,7 @@ class TwitterDataTransformer:
 
 if __name__ == "__main__":
     INPUT_PATH = "data/raw/customer_support_twitter/twcs/twcs.csv"
-    OUTPUT_PATH = "data/processed/reply_pairs.parquet"
+    OUTPUT_PATH = "data/processed/curated/"
 
     transformer = TwitterDataTransformer(INPUT_PATH, OUTPUT_PATH)
     transformer.run()
