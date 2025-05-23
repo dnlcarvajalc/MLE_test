@@ -78,3 +78,16 @@ The API and deployment system transforms the trained BERT model from Model Train
  - 🧪 CI/CD pipeline (e.g., GitHub Actions)
 
  - 🛠️ Retry/timeout logic in data ingestio
+
+# ARQ PROPOSAL
+ - Versioning of models and datasets (S3 + MLflow or SageMaker Model Registry).
+
+ - Automatic validation of datasets and models.
+
+ - Structured logging in CloudWatch and continuous monitoring.
+
+ - Separation of environments (dev, qc, prod) with different buckets/job names.
+
+ - CI/CD for models (GitHub Actions or Azure pipelines).
+
+![System Architecture](images/model_arq.png)
